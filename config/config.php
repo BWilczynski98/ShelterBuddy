@@ -3,7 +3,7 @@ define("DEV", true);
 
 $directory_path = substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT']));
 $parent_directory_path = dirname($directory_path);
-define('DOC_ROOT', $parent_directory_path . '/public/');
+define('DOC_ROOT', $parent_directory_path . '/public');
 
 $db_type = $_ENV['DB_TYPE'];
 $db_server = $_ENV['DB_SERVER'];

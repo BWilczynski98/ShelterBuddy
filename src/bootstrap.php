@@ -1,7 +1,6 @@
 <?php
 define("APP_ROOT", dirname(__FILE__, 2));
 require APP_ROOT . '/vendor/autoload.php';
-require APP_ROOT . '/src/functions.php';
 
 $dotenv = \Dotenv\Dotenv::createImmutable(APP_ROOT . '/src');
 $dotenv->load();

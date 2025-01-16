@@ -1,9 +1,10 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Strona główna serwisu{% endblock %}
 {% block content %}
-    <main class="container mx-auto">
+    <main>
         <article class="prose">
-            <h1>This is home page</h1>
+            <h1>This is user page</h1>
+            <p>User id: {{ id }}</p>
         </article>
     </main>
 {% endblock %}

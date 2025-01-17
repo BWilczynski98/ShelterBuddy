@@ -1,22 +1,29 @@
 <?php
 declare(strict_types=1);
+
 namespace Core;
 
 class Router
 {
     private array $routes = array();
-    private array $middlewares = array();
+    protected CMS $cms;
 
-    public function add(string $method, string $path, \Closure $handler, array $middleware = []): void
+    public function __construct(CMS $cms)
+    {
+        $this->cms = $cms;
+    }
+
+    public function add(string $method, string $path, string $controller, string $action): void
     {
         $this->routes[$method][$path] = [
-            'handler'       =>  $handler,
-            'middleware'    =>  $middleware
+            'controller'    =>  $controller,
+            'action'        =>  $action
         ];
     }
 
     public function dispatch(string $method, string $path): void
     {
+
         $route_for_method = $this->routes[$method] ?? [];
 
         foreach ($route_for_method as $route => $key) {
@@ -25,20 +32,31 @@ class Router
 
             if (preg_match($pattern, $path, $matches)) {
                 array_shift($matches);
-                call_user_func_array($key['handler'], $matches);
+                $this->callController($key['controller'], $key['action'], $matches);
                 return;
             }
         }
 
+        echo "Dispatch";
         $this->abort();
+    }
+
+    public function callController(string $controller, string $action, array $params): void
+    {
+        $contoller_class = "App\\Controllers\\{$controller}";
+
+        if (class_exists($contoller_class) && method_exists($contoller_class, $action)) {
+            $controller_instance = new $contoller_class($this->cms);
+            call_user_func_array([$controller_instance, $action], $params);
+        } else {
+            $this->abort(404);
+        }
     }
 
     protected function abort(int $response_code = 404, string $view = '404.html.twig', array $args = []): void
     {
         http_response_code($response_code);
-
-        global $twig;
-        echo $twig->render("{$response_code}.html.twig", $args);
+        View::render('abort.twig');
     }
 
 }

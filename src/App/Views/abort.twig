@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Page not found{% endblock %}
+{% block content %}
+
+    <main class="h-screen w-screen flex justify-center items-center">
+        <div class="text-center space-y-4">
+            <h1 class="text-3xl">Page not found</h1>
+            <p>
+                <a href="{{ doc_root }}" class="text-blue-500 underline">Go to home page</a>
+            </p>
+        </div>
+    </main>
+
+{% endblock %}

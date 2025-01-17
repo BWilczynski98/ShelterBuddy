@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Strona główna serwisu{% endblock %}
+{% block content %}
+    <main class="container mx-auto">
+        <article class="prose">
+            <h1>This is home page</h1>
+        </article>
+        <div>
+            <form method="GET" action="{{ doc_root }}/login" class="w-32">
+            <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Logowanie</button>
+            </form>
+            <form method="GET" action="{{ doc_root }}/register" class="w-32">
+                <button class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Rejestracja</button>
+            </form>
+        </div>
+    </main>
+{% endblock %}

@@ -15,11 +15,3 @@ if (DEV === false) {
 
 $cms = new \Core\CMS($dsn, $db_user, $db_password);
 unset($dsn, $db_user, $db_password);
-
-$loader = new Twig\Loader\FilesystemLoader(APP_ROOT . '/templates');
-$twig = new Twig\Environment($loader, ['cache' => APP_ROOT . '/var/cache', 'debug' => DEV]);
-$twig->addGlobal('doc_root', DOC_ROOT);
-
-if (DEV === true) {
-    $twig->addExtension(new \Twig\Extension\DebugExtension());
-}

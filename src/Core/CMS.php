@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Core;
 
@@ -6,18 +7,19 @@ class CMS
 {
     protected ?Database $db = null;
     protected ?Animals $animal = null;
+    protected array $models = [];
 
     public function __construct(string $dsn, ?string $username = null, ?string $password = null)
     {
         $this->db = new Database($dsn, $username, $password);
     }
 
-    public function animals()
+    public function getModel(string $model_class)
     {
-        if ($this->animal === null) {
-            $this->animal = new Animals($this->db);
+        if (!isset($this->models[$model_class])) {
+            $this->models[$model_class] = new $model_class($this->db);
         }
 
-        return $this->animal;
+        return $this->models[$model_class];
     }
 }

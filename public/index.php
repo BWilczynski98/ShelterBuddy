@@ -9,30 +9,13 @@ $method = $_SERVER["REQUEST_METHOD"];
 $path = substr($path, strlen(DOC_ROOT));
 $path = parse_url($path, PHP_URL_PATH);
 
-$router = new \Core\Router;
+$router = new \Core\Router($cms);
 
-$router->add("GET", "/", function() {
-    global $twig;
-    echo $twig->render("index.html.twig", []);
-});
+$router->add("GET", "/", "HomeController", "index");
+$router->add("GET", "/users", "UserController", 'listUsers');
+$router->add("GET", "/user/{id}", "UserController", 'getById');
 
-$router->add("GET", '/user/{id}', function ($id) {
-    global $twig;
-    echo $twig->render("user.html.twig", ['id' => $id]);
-});
-
-$router->add("GET", "/login", function () {
-    global $twig;
-    echo $twig->render('login.html.twig');
-});
-
-$router->add("GET", "/register", function () {
-    global $twig;
-    echo $twig->render('register.html.twig');
-});
-
-$router->add("POST", '/login', function () {
-    echo "Login page";
-});
-
+$router->add("GET", "/login", "LoginController", "index");
+$router->add("GET", '/register', "Auth\RegisterController", 'index');
+$router->add("POST", "/register", "Auth\RegisterController", 'register');
 $router->dispatch($method, $path);
